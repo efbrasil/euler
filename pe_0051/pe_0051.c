@@ -73,6 +73,23 @@ int num_of_primes (int n, int nchanges, int *changes, int *first)
 
 }
 
+int find_combinations (int *seq, int seq_size, int comb_size)
+{
+	int combs = 0;
+	if (seq_size < comb_size) return (0);
+	if (seq_size == comb_size) return (1);
+	if (comb_size < 1) return (0);
+	if (comb_size == 1) return (seq_size);
+
+	/* First item + combinations of the rest */
+	combs = find_combinations (seq + 1, seq_size - 1, comb_size - 1);
+
+	/* Without first item */
+	combs += find_combinations (seq + 1, seq_size - 1, comb_size);
+
+	return (combs);
+}
+	
 int main (int argc, char **argv)
 {
 	/* int n = 123456; */
@@ -90,9 +107,15 @@ int main (int argc, char **argv)
 
 	int n = 56003, first;
 	int changes[] = {1, 2};
+	int seq[] = {1, 2, 3, 4, 5, 6};
+	int seq_size = 6;
+	int comb_size = 2;
 
 	printf ("%d\n", num_of_primes (n, 2, changes, &first));
 	printf ("First: %d\n", first);
+
+	printf ("\ncombs = %d\n", find_combinations (seq, seq_size, comb_size));
+	
 
 	return (0);
 }
