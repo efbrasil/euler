@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-int gcd (int i, int j)
+long gcd (long i, long j)
 {
 	int tmp, big, small;
 
@@ -24,21 +24,31 @@ int gcd (int i, int j)
 		big = tmp;
 	}
 
-	return (big)
+	return (big);
 }
 
-/* int lcm (int i, int j) */
-/* { */
-
-	
-/* } */
+long lcm (long i, long j)
+{
+	return (i * j) / gcd (i, j);
+}
 
 int main (int argc, char **argv)
 {
-	int i, int j;
+	long i = 1;
+	long accum = i;
+	int lastnum = 20;
 
-	i = 6; j = 12;
-	printf ("(%02d, %02d): %d\n", i, j, gcd (i, j));
+	if (argc > 1) lastnum = atoi (argv [1]);
+	
+	while (i <= lastnum)
+	{
+		/* printf ("(%ld, %ld) - ", i, accum); */
+		accum = lcm (accum, i);
+		/* printf ("%ld\n", accum); */
+		i += 1;
+	}
+
+	printf ("%ld\n", accum);
 	
 	return (0);
 }
